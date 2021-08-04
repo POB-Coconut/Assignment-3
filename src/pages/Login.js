@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Address from 'components/Address';
 
 const Login = () => (
   <>
@@ -10,6 +11,10 @@ const Login = () => (
       <Link to='/user'>user 페이지로 이동</Link>
     </h1>
     <h1>Login Page</h1>
+
+    <div>
+      <Address />
+    </div>
   </>
 );
 
