@@ -2,14 +2,21 @@ import React from 'react';
 import styled from 'styled-components';
 import { COLOR_STYLES, FONT_SIZE_STYLES } from 'styles/styles';
 import { SignIn, SignUp } from 'components';
+import { setLocalStorage } from 'utils/storage';
+import { STORAGE_DATA } from 'utils/config';
+import mockData from 'utils/usersData';
 
-const Login = () => (
-  <Container>
-    <Logo>Jaranda</Logo>
-    <SignIn />
-    <SignUp />
-  </Container>
-);
+const Login = () => {
+  setLocalStorage(STORAGE_DATA.users, mockData);
+
+  return (
+    <Container>
+      <Logo>Jaranda</Logo>
+      <SignIn />
+      <SignUp />
+    </Container>
+  );
+};
 
 export default Login;
 

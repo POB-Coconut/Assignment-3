@@ -49,21 +49,17 @@ const DropdownContainer = styled.div`
 `;
 
 const DropdownBody = styled.p`
-  width: 100px;
-  min-width: 70px;
+  width: 150px;
   height: 36px;
   display: flex;
   justify-content: space-evenly;
   align-items: center;
-
   & svg {
     font-size: 1.8rem;
   }
-
   & svg:nth-child(1) {
     color: ${COLOR_STYLES.primaryDarker};
   }
-
   cursor: pointer;
 `;
 
@@ -84,7 +80,6 @@ const DropdownItem = styled.li`
   padding: 10px 0;
   cursor: pointer;
   border-top: 1px solid white;
-
   &:hover {
     border-left: 1px solid white;
     border-right: 1px solid white;

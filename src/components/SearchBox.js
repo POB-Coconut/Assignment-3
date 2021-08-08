@@ -58,19 +58,16 @@ const SearchBoxContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-top: 1px solid ${COLOR_STYLES.primaryDarker};
-  border-bottom: 1px solid ${COLOR_STYLES.primaryDarker};
-  font-size: ${FONT_SIZE_STYLES.medium};
+  border: 1px solid ${COLOR_STYLES.primaryDarker};
+  border-left: none;
+  font-size: ${FONT_SIZE_STYLES.small};
   border-radius: 6px;
 `;
 
 const SearchInput = styled.input`
-  width: calc(100% - 150px);
-  min-width: calc(528px - 150px);
-  height: 48px;
-  padding: 8px 12px;
-
-  border: 1px solid ${COLOR_STYLES.primaryDarker};
+  width: calc(100% - 48px);
+  min-width: calc(300px - 48px);
+  padding: 0 12px;
   border-radius: 6px 0 0 6px;
   border: none;
   :focus {
