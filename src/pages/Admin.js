@@ -23,8 +23,8 @@ const Admin = () => {
   const onLogout = () => (logout(), history.push('/'));
 
   useEffect(() => {
-    setUserData(getLocalStorage(STORAGE_DATA.users).reverse());
-    setCopiedData(getLocalStorage(STORAGE_DATA.users).reverse());
+    setUserData(getLocalStorage(STORAGE_DATA.users));
+    setCopiedData(getLocalStorage(STORAGE_DATA.users));
   }, []);
 
   return (

@@ -1,5 +1,95 @@
 [
   {
+    "id": "admin",
+    "password": "admin123",
+    "name": "강리자",
+    "age": 36,
+    "address": "서울시 강남구",
+    "cardNumber": "5222-1224-1224-1224",
+    "userType": "admin"
+  },
+  {
+    "id": "jin66",
+    "password": "1234",
+    "name": "장명진",
+    "age": 41,
+    "address": "울릉군 독도리",
+    "cardNumber": "4111-1111-1111-1111",
+    "userType": "teacher"
+  },
+  {
+    "id": "sonisthebest00",
+    "password": "son6876",
+    "name": "손홍민",
+    "age": 29,
+    "address": "옹진군 백령면",
+    "cardNumber": "6111-2444-2444-2444",
+    "userType": "teacher"
+  },
+  {
+    "id": "hamonica22",
+    "password": "monana009",
+    "name": "모니카",
+    "age": 33,
+    "address": "뉴욕시 맨해튼구",
+    "cardNumber": "5112-1443-1443-1443",
+    "userType": "parent"
+  },
+  {
+    "id": "chaboom33",
+    "password": "bkc123333",
+    "name": "차범근",
+    "age": 68,
+    "address": "서울시 종로구",
+    "cardNumber": "6611-2114-2114-2114",
+    "userType": "parent"
+  },
+  {
+    "id": "bpjenny82",
+    "password": "jen82bp",
+    "name": "김제니",
+    "age": 25,
+    "address": "서울시 용산구",
+    "cardNumber": "3112-6614-6614-6614",
+    "userType": "teacher"
+  },
+  {
+    "id": "kdb12345",
+    "password": "1234kdb",
+    "name": "강도범",
+    "age": 51,
+    "address": "부산시 해운대구",
+    "cardNumber": "9111-6111-6111-6111",
+    "userType": "parent"
+  },
+  {
+    "id": "ouch123",
+    "password": "123ochch",
+    "name": "엄어나",
+    "age": 45,
+    "address": "군산시 옥서면",
+    "cardNumber": "9111-6111-6111-6111",
+    "userType": "parent"
+  },
+  {
+    "id": "attack199",
+    "password": "naasdd123",
+    "name": "어택",
+    "age": 38,
+    "address": "서귀포시 중문동",
+    "cardNumber": "7221-1123-1123-1123",
+    "userType": "parent"
+  },
+  {
+    "id": "presidentKim12",
+    "password": "iamking22",
+    "name": "김정은",
+    "age": 37,
+    "address": "평양시 혁신동",
+    "cardNumber": "1111-0000-0000-0000",
+    "userType": "parent"
+  },
+  {
     "id": "dummy1",
     "password": "admin123",
     "name": "강리자",
@@ -712,96 +802,6 @@
   },
   {
     "id": "dummy80",
-    "password": "iamking22",
-    "name": "김정은",
-    "age": 37,
-    "address": "평양시 혁신동",
-    "cardNumber": "1111-0000-0000-0000",
-    "userType": "parent"
-  },
-  {
-    "id": "admin",
-    "password": "admin123",
-    "name": "강리자",
-    "age": 36,
-    "address": "서울시 강남구",
-    "cardNumber": "5222-1224-1224-1224",
-    "userType": "admin"
-  },
-  {
-    "id": "jin66",
-    "password": "1234",
-    "name": "장명진",
-    "age": 41,
-    "address": "울릉군 독도리",
-    "cardNumber": "4111-1111-1111-1111",
-    "userType": "teacher"
-  },
-  {
-    "id": "sonisthebest00",
-    "password": "son6876",
-    "name": "손홍민",
-    "age": 29,
-    "address": "옹진군 백령면",
-    "cardNumber": "6111-2444-2444-2444",
-    "userType": "teacher"
-  },
-  {
-    "id": "hamonica22",
-    "password": "monana009",
-    "name": "모니카",
-    "age": 33,
-    "address": "뉴욕시 맨해튼구",
-    "cardNumber": "5112-1443-1443-1443",
-    "userType": "parent"
-  },
-  {
-    "id": "chaboom33",
-    "password": "bkc123333",
-    "name": "차범근",
-    "age": 68,
-    "address": "서울시 종로구",
-    "cardNumber": "6611-2114-2114-2114",
-    "userType": "parent"
-  },
-  {
-    "id": "bpjenny82",
-    "password": "jen82bp",
-    "name": "김제니",
-    "age": 25,
-    "address": "서울시 용산구",
-    "cardNumber": "3112-6614-6614-6614",
-    "userType": "teacher"
-  },
-  {
-    "id": "kdb12345",
-    "password": "1234kdb",
-    "name": "강도범",
-    "age": 51,
-    "address": "부산시 해운대구",
-    "cardNumber": "9111-6111-6111-6111",
-    "userType": "parent"
-  },
-  {
-    "id": "ouch123",
-    "password": "123ochch",
-    "name": "엄어나",
-    "age": 45,
-    "address": "군산시 옥서면",
-    "cardNumber": "9111-6111-6111-6111",
-    "userType": "parent"
-  },
-  {
-    "id": "attack199",
-    "password": "naasdd123",
-    "name": "어택",
-    "age": 38,
-    "address": "서귀포시 중문동",
-    "cardNumber": "7221-1123-1123-1123",
-    "userType": "parent"
-  },
-  {
-    "id": "presidentKim12",
     "password": "iamking22",
     "name": "김정은",
     "age": 37,
