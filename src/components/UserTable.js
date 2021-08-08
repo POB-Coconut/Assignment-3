@@ -7,15 +7,10 @@ import { DATA_PER_PAGE } from 'utils/config';
 import Pagination from './Pagination';
 import TableData from './TableData';
 
-let userInfo;
-let tableHead;
-
-
-const UserTable = ({ userData, pageType }) => {
+const UserTable = ({ userData, currentPage, setCurrentPage }) => {
   const [currentUserData, setCurrentUserData] = useState([]);
   const [firstIndex, setFirstIndex] = useState(null);
   const [lastIndex, setLastIndex] = useState(null);
-  const [currentPage, setCurrentPage] = useState([]);
 
   useEffect(() => {
     const nextLastIndex = currentPage * DATA_PER_PAGE;
@@ -25,21 +20,10 @@ const UserTable = ({ userData, pageType }) => {
     setFirstIndex(nextFirstIndex);
   }, [currentPage, lastIndex]);
 
-  
-  userInfo = userData;
-  tableHead = ['아이디', '이름', '나이','주소','카드 번호','권한'];
-  if(pageType === 'user'){
-    userInfo = userData.filter((user)=> delete user.cardNumber);
-    tableHead = tableHead.filter((head)=> head !== '카드 번호');
-  }
-
-
   useEffect(() => {
     setCurrentUserData(currentUsers(userData, firstIndex, lastIndex));
   }, [userData, firstIndex, lastIndex]);
-  
 
-  
   if (userData.length === 0) {
     return <CenterText>데이터가 없습니다</CenterText>;
   }
@@ -49,14 +33,16 @@ const UserTable = ({ userData, pageType }) => {
       <TableContainer>
         <thead>
           <tr>
-            {tableHead.map((menu, key)=>(
-              <th key={key}>{menu}</th>
-              )
-            )}
+            <th>아이디</th>
+            <th>이름</th>
+            <th>나이</th>
+            <th>주소</th>
+            <th>카드 번호</th>
+            <th>권한</th>
           </tr>
         </thead>
         <tbody>
-          <TableData TableData={userData} pageType={pageType} />
+          <TableData TableData={currentUserData} />
         </tbody>
       </TableContainer>
       <Pagination
@@ -74,7 +60,6 @@ const TableContainer = styled.table`
   text-align: center;
   border-radius: 6px 6px 6px 6px;
   width: 100%;
-
   & tr,
   th,
   td {

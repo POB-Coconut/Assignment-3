@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { layouts as S } from 'styles/layouts';
 import GlobalStyles from 'styles/GlobalStyles';
@@ -13,14 +12,12 @@ import { COLOR_STYLES } from 'styles/styles';
 
 const User = () => {
   const history = useHistory();
-  const [teacherList] = useState(getTeacherList());
-  const [loginUser] = useState(getLocalStorage(LOGIN_USER));
-  const [userType] = useState(loginUser.userType);
-  const [menuList] = useState(
+  const teacherList = getTeacherList();
+  const { name, userType } = getLocalStorage(LOGIN_USER);
+  const menuList =
     userType === 'teacher'
       ? ['선생님 메뉴1', '선생님 메뉴2', '선생님 메뉴3']
-      : ['학부모 메뉴1', '학부모 메뉴2', '학부모 메뉴3'],
-  );
+      : ['학부모 메뉴1', '학부모 메뉴2', '학부모 메뉴3'];
 
   const onLogout = () => (logout(), history.push('/'));
 
@@ -28,7 +25,7 @@ const User = () => {
     <>
       <GlobalStyles />
       <S.Wrap>
-        <Navbar name={loginUser.name} />
+        <Navbar name={name} />
         <UserContainer>
           <UserSection>
             <UserContent>
@@ -66,8 +63,8 @@ const User = () => {
                   자란다와 함께하는 {`${userType === 'teacher' ? `학생` : `선생님`} `}
                 </CardTitle>
                 <CardBox>
-                  {teacherList.map(({ name }, key) => (
-                    <UserCard name={name} key={key} userType={userType} />
+                  {teacherList.map(({ _name }, key) => (
+                    <UserCard name={_name} key={key} userType={userType} />
                   ))}
                 </CardBox>
               </S.Sidebar>

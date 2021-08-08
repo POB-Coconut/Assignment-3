@@ -1,13 +1,11 @@
-  
 import React from 'react';
-import AccountButton from 'components/AccountButton';
 import { layouts as S } from 'styles/layouts';
 import { COLOR_STYLES, FONT_SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 
 const Navbar = ({ name }) => {
   const menuList = ['공통메뉴1', '공통메뉴2', '공통메뉴3'];
-  const userMenu = ['1', '2'];
+  const userMenu = ['마이페이지', '설정'];
 
   return (
     <NavWrap>
@@ -33,7 +31,6 @@ const Navbar = ({ name }) => {
                   <Menu key={key}>{menu}</Menu>
                 ))}
               </UserMenuList>
-             
             </PopupMenu>
           </Account>
         </NavContent>
@@ -47,14 +44,7 @@ const theme = {
 };
 
 const UserName = styled.h1`
-  width:44px;
-`
-
-
-const AccountContainer = styled(S.Container)`
-  margin: 4px auto !important;
-  text-align: center;
-
+  width: 44px;
 `;
 
 const PopupMenu = styled.div`
@@ -74,7 +64,6 @@ const PopupMenu = styled.div`
     z-index: 9999;
   }
 
-
   @media only screen and ${`(min-width: ${theme.threshold})`} {
     display: none;
     & ul {
@@ -88,7 +77,6 @@ const PopupMenu = styled.div`
     :hover {
       color: ${COLOR_STYLES.primary};
     }
-
   }
 `;
 
@@ -172,7 +160,7 @@ const Account = styled.div`
   align-items: center;
   width: 100%;
   height: 52px;
-  
+
   color: ${COLOR_STYLES.greyDarker};
   :hover ${PopupMenu} {
     display: block;
