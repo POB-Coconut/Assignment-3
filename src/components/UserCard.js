@@ -1,10 +1,10 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const UserCard = ({ teacherName, userType }) => {
+const UserCard = ({ name, userType }) => {
   return (
     <CardWrap>
-      {userType ? (
+      {userType === 'teacher' ? (
         <>
           <div>
             <ImgBox>
@@ -17,7 +17,7 @@ const UserCard = ({ teacherName, userType }) => {
               <UserIcon />
               <TextLevel>잘 자란 학생</TextLevel>
             </ImOnTheTextLevel>
-            <TextName>{teacherName}</TextName>
+            <TextName>{name}</TextName>
             <TextSchool>학교</TextSchool>
             <TextComment>미술과 공룡 그리기를 좋아하는 친구</TextComment>
           </TextBox>
@@ -35,7 +35,7 @@ const UserCard = ({ teacherName, userType }) => {
               <UserIcon />
               <TextLevel>잘 자란 선생님</TextLevel>
             </ImOnTheTextLevel>
-            <TextName>{teacherName}</TextName>
+            <TextName>{name}</TextName>
             <TextSchool>학교</TextSchool>
             <TextComment>의대생과 함께하는 이해 쏙쏙 수학 수업</TextComment>
           </TextBox>

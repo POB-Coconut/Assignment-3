@@ -1,4 +1,3 @@
-import React, {useEffect} from 'react';
 import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { layouts as S } from 'styles/layouts';
@@ -11,53 +10,19 @@ import Navbar from 'components/Navbar';
 import { AccountButton } from 'components';
 import UserCard from 'components/UserCard';
 import { COLOR_STYLES } from 'styles/styles';
-import { currentUsers } from 'utils/currentUsers';
-import { SEARCH_DROPDOWN_ITEMS } from 'utils/config';
 
 const User = () => {
   const history = useHistory();
-  let [teacherList] = useState(getTeacherList());
+  const [teacherList] = useState(getTeacherList());
   const [loginUser] = useState(getLocalStorage(LOGIN_USER));
-  const [isTeacher] = useState(loginUser.userType === 'teacher' ? true : false);
+  const [userType] = useState(loginUser.userType);
   const [menuList] = useState(
-    loginUser.userType === 'parent'
-      ? ['학부모 메뉴1', '학부모 메뉴2', '학부모 메뉴3']
-      : ['선생님 메뉴1', '선생님 메뉴2', '선생님 메뉴3'],
+    userType === 'teacher'
+      ? ['선생님 메뉴1', '선생님 메뉴2', '선생님 메뉴3']
+      : ['학부모 메뉴1', '학부모 메뉴2', '학부모 메뉴3'],
   );
 
   const onLogout = () => (logout(), history.push('/'));
-
-  const userMenu = ['마이페이지', '이용안내'];
-  const [currentUserData, setCurrentUserData] = useState([]);
-  const [firstIndex, setFirstIndex] = useState(null);
-  const [lastIndex, setLastIndex] = useState(null);
-  const [userData, setUserData] = useState([]);
-  const [copiedData, setCopiedData] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  
-  teacherList = []
-
-  useEffect(() => {
-    setCurrentUserData((currentUsers(userData, firstIndex, lastIndex)));
-  }, [userData, firstIndex, lastIndex]);
-
-  useEffect(() => {
-    setUserData(getLocalStorage( SEARCH_DROPDOWN_ITEMS));
-    setCopiedData(getLocalStorage( SEARCH_DROPDOWN_ITEMS));
-  }, []);
-
-  function pushData(){
-    for(let i =0; i<userData.length; i++){
-      if(userData[i].userType==='teacher'){
-        teacherList.push(userData[i])
-      }
-    }
-  }
-  pushData();
-  pushData();
-  pushData();
-  pushData();
-  
 
   return (
     <>
@@ -70,7 +35,7 @@ const User = () => {
               <PageText>
                 <UserIcon />
                 어서오세요 자란다
-                {isTeacher ? '선생님' : '부모님'}
+                {userType === 'teacher' ? '선생님' : '부모님'}
                 페이지 입니다
               </PageText>
               <MenuList>
@@ -78,7 +43,7 @@ const User = () => {
                   <Menu key={key}>{sideMenu}</Menu>
                 ))}
               </MenuList>
-              {isTeacher ? (
+              {userType === 'teacher' ? (
                 <>
                   <ContentText>아이를 좋아하는 자란쌤</ContentText>
                   <ContentText>함께 놀고 뛰며 아이의 꿈을 키워주세요!</ContentText>
@@ -97,10 +62,12 @@ const User = () => {
                 <UserAccountBox>
                   <AccountButton onClick={onLogout} content='로그아웃' />
                 </UserAccountBox>
-                <CardTitle>자란다와 함께하는 {`${isTeacher ? `학생` : `선생님`} `}</CardTitle>
+                <CardTitle>
+                  자란다와 함께하는 {`${userType === 'teacher' ? `학생` : `선생님`} `}
+                </CardTitle>
                 <CardBox>
                   {teacherList.map(({ name }, key) => (
-                    <UserCard teacherName={name} key={key} userType={isTeacher} />
+                    <UserCard name={name} key={key} userType={userType} />
                   ))}
                 </CardBox>
               </S.Sidebar>
@@ -114,7 +81,7 @@ const User = () => {
 
 const UserContent = styled(S.Content)`
   width: 60%;
-`
+`;
 
 const MenuList = styled.ul`
   display: flex;
@@ -140,7 +107,6 @@ const PageText = styled.div`
 `;
 
 const CardTitle = styled.div`
-
   padding: 10px 0;
   margin-top: 58px;
   color: ${COLOR_STYLES.white};
@@ -184,22 +150,22 @@ const UserSection = styled(S.Section)`
   @media only screen and (max-width: 973px) {
     display: block;
 
-    & ${CardAside}{
+    & ${CardAside} {
       width: 80%;
       margin: 0 auto;
     }
 
-    & ${UserContent}{
+    & ${UserContent} {
       width: 80%;
       margin: 0 auto;
     }
 
-    & ${UserAccountBox}{
+    & ${UserAccountBox} {
       position: absolute;
       top: 70px;
       right: -2%;
       width: 30%;
-      opacitiy:1;
+      opacitiy: 1;
     }
   }
 `;
