@@ -41,9 +41,11 @@ const UserTable = ({ userData, currentPage, setCurrentPage }) => {
             <th>권한</th>
           </tr>
         </thead>
-        <tbody>
-          <TableData TableData={currentUserData} />
-        </tbody>
+        {currentUserData.length > 0 && (
+          <tbody>
+            <TableData TableData={currentUserData} />
+          </tbody>
+        )}
       </TableContainer>
       <Pagination
         totalDataNum={userData.length}

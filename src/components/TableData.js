@@ -3,7 +3,7 @@ import React from 'react';
 const TableData = ({ TableData }) => {
   return (
     <>
-      {TableData?.map((data) => (
+      {TableData.map((data) => (
         <tr key={data.id}>
           <td>{data.id}</td>
           <td>{data.name}</td>

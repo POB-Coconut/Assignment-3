@@ -11,10 +11,13 @@ const Pagination = ({ totalDataNum, paginate, currentPage }) => {
     const totalPageList = Array.from({ length: totalPageNum }, (v, i) => i + 1);
 
     if (currentPage <= ONE_WAY_MIN_PAGE_NUM) {
-      const displayedPageList = totalPageList.slice(0, ONE_WAY_MIN_PAGE_NUM + 2);
+      const displayedPageList = totalPageList.slice(0, 2 * ONE_WAY_MIN_PAGE_NUM - 1);
       setPageLists(displayedPageList);
-    } else if (currentPage >= totalPageNum - 2) {
-      const displayedPageList = totalPageList.slice(totalPageNum - 5, totalPageNum);
+    } else if (currentPage >= totalPageNum - (ONE_WAY_MIN_PAGE_NUM - 1)) {
+      const displayedPageList = totalPageList.slice(
+        totalPageNum - (2 * ONE_WAY_MIN_PAGE_NUM - 1),
+        totalPageNum,
+      );
       setPageLists(displayedPageList);
     } else if (currentPage > ONE_WAY_MIN_PAGE_NUM) {
       const displayedPageList = totalPageList.slice(
