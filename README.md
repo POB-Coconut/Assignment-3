@@ -23,7 +23,7 @@ Jaranda : 유저 정보를 입력받아 회원가입 페이지 구현 / 로그�
 | 장명진 | [thinkJin6](https://github.com/thinkJin6) | Login/Singup: localstorage 관련 Util, Mock 구성, 레이아웃      |
 | 이제경 | [jejelee94](https://github.com/jejelee94) | Admin: 데이터테이블 /검색기능 계정추가                         |
 | 김승원 | [lumpenop](https://github.com/lumpenop)   | Admin: 스타일링 + 그래프시각화                                 |
-| 남택훈 | [tech-hoon](https://github.com/tech-hoon) | Admin: 일반사용자/관리자 컴포넌트                              |
+| 남택훈 | [tech-hoon](https://github.com/tech-hoon) | Admin/User: 관리자/일반사용자 컴포넌트, 권한 관리                          |
 | 이상훈 | [simoniful](https://github.com/simoniful) | Login/Singup: input, form 커스텀 훅, 유효성 검증               |
 | 최인경 | [ink-0](https://github.com/ink-0)         | Admin: 스타일링 + 그래프시각화                                 |
 
@@ -69,6 +69,7 @@ Admin 계정으로 로그인을 통해 userInfo를 관리하고 관련 데이터
 >
 > - [x] FunctionComponent 사용
 > - [x] LocalStorage 사용해서 이력을 관리
+> - [x] 권한에 따라 접근 페이지 관리
 > - [x] 외부 API를 사용하지 않고, Client의 리소스만 사용
 > - [x] 편리하게 Storage를 사용할 수 있는 Utils 생성
 > - [x] Table, 검색 기능 등 관련 UI 구성
