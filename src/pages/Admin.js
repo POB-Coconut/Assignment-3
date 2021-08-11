@@ -16,8 +16,8 @@ import { logout } from 'utils/auth';
 const Admin = () => {
   const history = useHistory();
   const [loginUser] = useLocalStorage(LOGIN_USER);
-  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.users);
-  const [copiedData] = useLocalStorage(STORAGE_KEYS.users);
+  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USERS);
+  const [copiedData] = useLocalStorage(STORAGE_KEYS.USERS);
   const [currentPage, setCurrentPage] = useState(1);
 
   const onLogout = () => (logout(), history.push(ROUTE_PATHS.HOME));

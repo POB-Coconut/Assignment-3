@@ -13,7 +13,7 @@ import Term from 'components/Term';
 import UserTypeSelect from 'components/UserTypeSelect';
 
 const SignUp = () => {
-  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.users, mockData);
+  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USERS, mockData);
   const [isTermChecked, setIsTermChecked] = useState(false);
   const [isParentChecked, setIsParentChecked] = useState(true);
   const address = useInput('');

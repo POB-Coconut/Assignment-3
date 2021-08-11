@@ -14,7 +14,7 @@ import { COLOR_STYLES } from 'styles/styles';
 const User = () => {
   const history = useHistory();
   const [user] = useLocalStorage(LOGIN_USER);
-  const [usersData] = useLocalStorage(STORAGE_KEYS.users);
+  const [usersData] = useLocalStorage(STORAGE_KEYS.USERS);
   const teacherList = getTeacherList(usersData);
   const menuList =
     user.userType === 'teacher'
