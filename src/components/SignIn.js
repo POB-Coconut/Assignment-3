@@ -1,35 +1,39 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useForm from 'hooks/useForm';
-import { LOGIN_USER, STORAGE_DATA } from 'utils/config';
+import { useForm, useLocalStorage } from 'hooks';
+import { LOGIN_USER, STORAGE_KEYS, ROUTE_PATHS } from 'utils/config';
+import { setLocalStorage } from 'utils/storage';
 import { loginValidate } from 'utils/regex';
-import { getLocalStorage, setLocalStorage } from 'utils/storage';
+import mockData from 'utils/usersData';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 import SignInForm from './SignInForm';
 
+// TODO useForm 수정해서 signin 시 login func 실행되며 rerender 되는거 막기
+
 const SignIn = () => {
   const [isSignInFormOpen, setIsSignInFormOpen] = useState(false);
+  const [userList] = useLocalStorage(STORAGE_KEYS.users, mockData);
+  // const [_, setUser] = useLocalStorage(LOGIN_USER);
   const history = useHistory();
-  function login() {
-    const userList = getLocalStorage(STORAGE_DATA.users);
-    const user = userList.find(
+
+  const login = () => {
+    const match = userList.find(
       (user) => user.id === values.id && user.password === values.password,
     );
 
-    if (user === undefined) {
-      alert('아이디와 비밀번호를 확인해주세요');
-      return null;
-    }
+    if (!match) return alert('아이디와 비밀번호를 확인해주세요');
 
-    if (user.userType === 'admin') {
-      setLocalStorage(LOGIN_USER, { id: user.id, name: user.name, userType: user.userType });
-      history.push('/admin');
-    } else if (user.userType === 'teacher' || user.userType === 'parent') {
-      setLocalStorage(LOGIN_USER, { id: user.id, name: user.name, userType: user.userType });
-      history.push('/user');
+    if (match.userType === 'admin') {
+      // setUser({ id: match.id, name: match.name, userType: match.userType });
+      setLocalStorage(LOGIN_USER, { id: match.id, name: match.name, userType: match.userType });
+      history.push(ROUTE_PATHS.ADMIN);
+    } else if (match.userType === 'teacher' || match.userType === 'parent') {
+      // setUser({ id: match.id, name: match.name, userType: match.userType });
+      setLocalStorage(LOGIN_USER, { id: match.id, name: match.name, userType: match.userType });
+      history.push(ROUTE_PATHS.USER);
     }
-  }
+  };
 
   const { values, errors, handleChange, handleSubmit } = useForm(login, loginValidate);
 

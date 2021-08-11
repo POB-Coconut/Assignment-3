@@ -1,31 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 import { layouts as S } from 'styles/layouts';
 import GlobalStyles from 'styles/GlobalStyles';
+import { LOGIN_USER, STORAGE_KEYS, ROUTE_PATHS } from 'utils/config';
+import { useLocalStorage } from 'hooks';
 import Navbar from 'components/Navbar';
 import Chart from 'components/Chart';
 import UserTable from 'components/UserTable';
 import AccountButton from 'components/AccountButton';
 import SearchBox from 'components/SearchBox';
 import SignUpModal from 'components/SignUpModal';
-import { getLocalStorage } from 'utils/storage';
-import { LOGIN_USER, STORAGE_DATA } from 'utils/config';
 import { logout } from 'utils/auth';
 
 const Admin = () => {
   const history = useHistory();
-  const [loginUser] = useState(getLocalStorage(LOGIN_USER));
-  const [userData, setUserData] = useState([]);
-  const [copiedData, setCopiedData] = useState([]);
+  const [loginUser] = useLocalStorage(LOGIN_USER);
+  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.users);
+  const [copiedData] = useLocalStorage(STORAGE_KEYS.users);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const onLogout = () => (logout(), history.push('/'));
-
-  useEffect(() => {
-    setUserData(getLocalStorage(STORAGE_DATA.users));
-    setCopiedData(getLocalStorage(STORAGE_DATA.users));
-  }, []);
+  const onLogout = () => (logout(), history.push(ROUTE_PATHS.HOME));
 
   return (
     <>
