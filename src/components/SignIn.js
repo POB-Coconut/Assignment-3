@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import useForm from 'hooks/useForm';
-import { LOGIN_USER, STORAGE_DATA } from 'utils/config';
+import { LOGIN_USER, STORAGE_DATA, ROUTE_PATHS } from 'utils/config';
 import { loginValidate } from 'utils/regex';
 import { getLocalStorage, setLocalStorage } from 'utils/storage';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
@@ -24,10 +24,10 @@ const SignIn = () => {
 
     if (user.userType === 'admin') {
       setLocalStorage(LOGIN_USER, { id: user.id, name: user.name, userType: user.userType });
-      history.push('/admin');
+      history.push(ROUTE_PATHS.ADMIN);
     } else if (user.userType === 'teacher' || user.userType === 'parent') {
       setLocalStorage(LOGIN_USER, { id: user.id, name: user.name, userType: user.userType });
-      history.push('/user');
+      history.push(ROUTE_PATHS.USER);
     }
   }
 

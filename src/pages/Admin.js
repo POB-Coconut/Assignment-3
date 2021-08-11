@@ -10,7 +10,7 @@ import AccountButton from 'components/AccountButton';
 import SearchBox from 'components/SearchBox';
 import SignUpModal from 'components/SignUpModal';
 import { getLocalStorage } from 'utils/storage';
-import { LOGIN_USER, STORAGE_DATA } from 'utils/config';
+import { LOGIN_USER, STORAGE_DATA, ROUTE_PATHS } from 'utils/config';
 import { logout } from 'utils/auth';
 
 const Admin = () => {
@@ -20,7 +20,7 @@ const Admin = () => {
   const [copiedData, setCopiedData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
 
-  const onLogout = () => (logout(), history.push('/'));
+  const onLogout = () => (logout(), history.push(ROUTE_PATHS.HOME));
 
   useEffect(() => {
     setUserData(getLocalStorage(STORAGE_DATA.users));

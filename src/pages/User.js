@@ -3,7 +3,7 @@ import { layouts as S } from 'styles/layouts';
 import GlobalStyles from 'styles/GlobalStyles';
 import styled from 'styled-components';
 import { getLocalStorage, getTeacherList } from 'utils/storage';
-import { LOGIN_USER } from 'utils/config';
+import { LOGIN_USER, ROUTE_PATHS } from 'utils/config';
 import { logout } from 'utils/auth';
 import Navbar from 'components/Navbar';
 import { AccountButton } from 'components';
@@ -19,7 +19,7 @@ const User = () => {
       ? ['선생님 메뉴1', '선생님 메뉴2', '선생님 메뉴3']
       : ['학부모 메뉴1', '학부모 메뉴2', '학부모 메뉴3'];
 
-  const onLogout = () => (logout(), history.push('/'));
+  const onLogout = () => (logout(), history.push(ROUTE_PATHS.HOME));
 
   return (
     <>

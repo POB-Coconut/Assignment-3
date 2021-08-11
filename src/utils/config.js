@@ -4,6 +4,11 @@ export const LOGIN_USER = 'loginUser';
 export const STORAGE_DATA = {
   users: 'users',
 };
+export const ROUTE_PATHS = {
+  HOME: '/',
+  ADMIN: '/admin',
+  USER: 'user',
+};
 export const SEARCH_DROPDOWN_ITEMS = [
   {
     id: 1,
