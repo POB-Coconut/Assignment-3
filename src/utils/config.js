@@ -1,13 +1,13 @@
 export const DATA_PER_PAGE = 12;
 export const ONE_WAY_MIN_PAGE_NUM = 3;
 export const LOGIN_USER = 'loginUser';
-export const STORAGE_DATA = {
+export const STORAGE_KEYS = {
   users: 'users',
 };
 export const ROUTE_PATHS = {
   HOME: '/',
   ADMIN: '/admin',
-  USER: 'user',
+  USER: '/user',
 };
 export const SEARCH_DROPDOWN_ITEMS = [
   {

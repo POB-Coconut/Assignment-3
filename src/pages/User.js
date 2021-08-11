@@ -2,8 +2,9 @@ import { useHistory } from 'react-router-dom';
 import { layouts as S } from 'styles/layouts';
 import GlobalStyles from 'styles/GlobalStyles';
 import styled from 'styled-components';
-import { getLocalStorage, getTeacherList } from 'utils/storage';
-import { LOGIN_USER, ROUTE_PATHS } from 'utils/config';
+import { useLocalStorage } from 'hooks';
+import { getTeacherList } from 'utils/getTeacherList';
+import { LOGIN_USER, ROUTE_PATHS, STORAGE_KEYS } from 'utils/config';
 import { logout } from 'utils/auth';
 import Navbar from 'components/Navbar';
 import { AccountButton } from 'components';
@@ -12,10 +13,11 @@ import { COLOR_STYLES } from 'styles/styles';
 
 const User = () => {
   const history = useHistory();
-  const teacherList = getTeacherList();
-  const { name, userType } = getLocalStorage(LOGIN_USER);
+  const [user] = useLocalStorage(LOGIN_USER);
+  const [usersData] = useLocalStorage(STORAGE_KEYS.users);
+  const teacherList = getTeacherList(usersData);
   const menuList =
-    userType === 'teacher'
+    user.userType === 'teacher'
       ? ['선생님 메뉴1', '선생님 메뉴2', '선생님 메뉴3']
       : ['학부모 메뉴1', '학부모 메뉴2', '학부모 메뉴3'];
 
@@ -25,14 +27,14 @@ const User = () => {
     <>
       <GlobalStyles />
       <S.Wrap>
-        <Navbar name={name} />
+        <Navbar name={user.name} />
         <UserContainer>
           <UserSection>
             <UserContent>
               <PageText>
                 <UserIcon />
                 어서오세요 자란다
-                {userType === 'teacher' ? '선생님' : '부모님'}
+                {user.userType === 'teacher' ? '선생님' : '부모님'}
                 페이지 입니다
               </PageText>
               <MenuList>
@@ -40,7 +42,7 @@ const User = () => {
                   <Menu key={key}>{sideMenu}</Menu>
                 ))}
               </MenuList>
-              {userType === 'teacher' ? (
+              {user.userType === 'teacher' ? (
                 <>
                   <ContentText>아이를 좋아하는 자란쌤</ContentText>
                   <ContentText>함께 놀고 뛰며 아이의 꿈을 키워주세요!</ContentText>
@@ -60,11 +62,11 @@ const User = () => {
                   <AccountButton onClick={onLogout} content='로그아웃' />
                 </UserAccountBox>
                 <CardTitle>
-                  자란다와 함께하는 {`${userType === 'teacher' ? `학생` : `선생님`} `}
+                  자란다와 함께하는 {`${user.userType === 'teacher' ? `학생` : `선생님`} `}
                 </CardTitle>
                 <CardBox>
                   {teacherList.map(({ _name }, key) => (
-                    <UserCard name={_name} key={key} userType={userType} />
+                    <UserCard name={_name} key={key} userType={user.userType} />
                   ))}
                 </CardBox>
               </S.Sidebar>
@@ -162,7 +164,7 @@ const UserSection = styled(S.Section)`
       top: 70px;
       right: -2%;
       width: 30%;
-      opacitiy: 1;
+      opacity: 1;
     }
   }
 `;

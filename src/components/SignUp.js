@@ -2,19 +2,18 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import { InputWrapper } from 'styles/InputWrapper';
-import useForm from 'hooks/useForm';
+import { STORAGE_KEYS } from 'utils/config';
+import { filterObject } from 'utils/filterObject';
+import mockData from 'utils/usersData';
 import { signupValidate } from 'utils/regex';
-import { getLocalStorage, setLocalStorage } from 'utils/storage';
+import { useForm, useInput, useLocalStorage } from 'hooks';
 import CardNumber from 'components/CardNumber';
 import Address from 'components/Address';
 import Term from 'components/Term';
 import UserTypeSelect from 'components/UserTypeSelect';
-import useInput from 'hooks/useInput';
-import { STORAGE_DATA } from 'utils/config';
-import { filterObject } from 'utils/filterObject';
 
 const SignUp = () => {
-  const [userData, setUserData] = useState(getLocalStorage(STORAGE_DATA.users));
+  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.users, mockData);
   const [isTermChecked, setIsTermChecked] = useState(false);
   const [isParentChecked, setIsParentChecked] = useState(true);
   const address = useInput('');
@@ -40,7 +39,6 @@ const SignUp = () => {
     const updatedUserData = [...userData, newUser];
 
     setUserData(updatedUserData);
-    setLocalStorage(STORAGE_DATA.users, updatedUserData);
     setIsTermChecked(false);
     address.clearValue();
     cardNumber.clearValue();
