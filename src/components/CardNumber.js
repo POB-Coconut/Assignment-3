@@ -2,21 +2,20 @@ import React, { useState, useRef } from 'react';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 
-function CardNumber(props) {
-  const { value, onChange } = props;
+function CardNumber({ cardNumber, handleChange }) {
   const cardNumberRef = useRef();
   const [modalVisible, setModalVisible] = useState(false);
 
   const openModal = () => {
     setModalVisible(true);
-    onChange({ target: { value: '' } });
+    handleChange({ target: { name: 'cardNumber', value: '' } });
   };
 
   const closeModal = (e) => {
     if (e.currentTarget.id === 'save-btn') {
       const a = [...cardNumberRef.current.childNodes].map((node) => node.value);
       cardNumberRef.current.childNodes.value = '';
-      onChange({ target: { value: a.join('-') } });
+      handleChange({ target: { name: 'cardNumber', value: a.join('-') } });
     }
     setModalVisible(false);
   };
@@ -41,7 +40,7 @@ function CardNumber(props) {
       <input
         type='password'
         onClick={openModal}
-        value={value}
+        value={cardNumber}
         placeholder='카드번호 16자리를 입력해주세요'
         readOnly
       />

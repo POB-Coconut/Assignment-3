@@ -6,7 +6,7 @@ import { STORAGE_KEYS } from 'utils/config';
 import { filterObject } from 'utils/filterObject';
 import mockData from 'utils/usersData';
 import { signupValidate } from 'utils/regex';
-import { useForm, useInput, useLocalStorage } from 'hooks';
+import { useForm, useLocalStorage } from 'hooks';
 import CardNumber from 'components/CardNumber';
 import Address from 'components/Address';
 import Term from 'components/Term';
@@ -14,21 +14,11 @@ import UserTypeSelect from 'components/UserTypeSelect';
 
 const SignUp = () => {
   const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USERS, mockData);
-  const address = useInput('');
-  const cardNumber = useInput('');
 
   const signUp = (values) => {
-    if (!address.value || !cardNumber.value) {
-      address.checkIsError();
-      cardNumber.checkIsError();
-      return;
-    }
-
     const newUserData = getNewUserData(values);
 
     setUserData(newUserData);
-    address.clearValue();
-    cardNumber.clearValue();
     alert('회원가입이 성공적으로 되었습니다. 더 진행하시려면 로그인을 해주십시오.');
 
     return true;
@@ -41,10 +31,9 @@ const SignUp = () => {
     const newValues = filterObject(values, 'checkingPassword');
     const newUser = {
       ...newValues,
-      address: address.value,
-      cardNumber: cardNumber.value,
       userType,
     };
+
     return [...userData, newUser];
   };
 
@@ -124,15 +113,18 @@ const SignUp = () => {
               value={values.age || ''}
               required
             />
-            {errors.age && <label htmlFor='name'>{errors.age}</label>}
+            {errors.age && <label htmlFor='age'>{errors.age}</label>}
           </InputWrapper>
         </InputDouble>
 
-        <InputWrapper error={address.isError}>
-          <Address id='address' {...address} />
+        <InputWrapper error={errors.address}>
+          <Address id='address' address={values.address} handleChange={handleChange} />
+          {errors.address && <label htmlFor='address'>{errors.address}</label>}
         </InputWrapper>
-        <InputWrapper error={cardNumber.isError}>
-          <CardNumber id='cardNumber' {...cardNumber} />
+
+        <InputWrapper error={errors.cardNumber}>
+          <CardNumber id='cardNumber' cardNumber={values.cardNumber} handleChange={handleChange} />
+          {errors.cardNumber && <label htmlFor='cardNumber'>{errors.cardNumber}</label>}
         </InputWrapper>
 
         <Term isChecked={values.term} handleChange={handleChange} />
