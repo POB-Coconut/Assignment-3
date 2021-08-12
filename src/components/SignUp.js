@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import { InputWrapper } from 'styles/InputWrapper';
@@ -14,8 +14,6 @@ import UserTypeSelect from 'components/UserTypeSelect';
 
 const SignUp = () => {
   const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USERS, mockData);
-  const [isTermChecked, setIsTermChecked] = useState(false);
-  const [isParentChecked, setIsParentChecked] = useState(true);
   const address = useInput('');
   const cardNumber = useInput('');
 
@@ -26,20 +24,9 @@ const SignUp = () => {
       return;
     }
 
-    if (!isTermChecked) return alert('이용약관에 동의 후 가입 가능합니다.');
+    const newUserData = getNewUserData(values);
 
-    const userType = isParentChecked ? 'parent' : 'teacher';
-    const newValues = filterObject(values, 'checkingPassword');
-    const newUser = {
-      ...newValues,
-      address: address.value,
-      cardNumber: cardNumber.value,
-      userType,
-    };
-    const updatedUserData = [...userData, newUser];
-
-    setUserData(updatedUserData);
-    setIsTermChecked(false);
+    setUserData(newUserData);
     address.clearValue();
     cardNumber.clearValue();
     alert('회원가입이 성공적으로 되었습니다. 더 진행하시려면 로그인을 해주십시오.');
@@ -49,19 +36,16 @@ const SignUp = () => {
 
   const { values, errors, handleChange, handleSubmit } = useForm(signUp, signupValidate);
 
-  const handleClickTerm = (e) => {
-    if (e.target.id === 'term') return;
-
-    setIsTermChecked((isChecked) => !isChecked);
-  };
-
-  const handleClickType = (e) => {
-    if (e.target.closest('#parent')) {
-      setIsParentChecked(true);
-    }
-    if (e.target.closest('#teacher')) {
-      setIsParentChecked(false);
-    }
+  const getNewUserData = (values) => {
+    const userType = values.isTeacherChecked ? 'teacher' : 'parent';
+    const newValues = filterObject(values, 'checkingPassword');
+    const newUser = {
+      ...newValues,
+      address: address.value,
+      cardNumber: cardNumber.value,
+      userType,
+    };
+    return [...userData, newUser];
   };
 
   return (
@@ -69,7 +53,7 @@ const SignUp = () => {
       <h3>자란다 회원가입</h3>
       <p>10초만에 가입하고 아이와 함께 할 선생님 정보를 받아보세요</p>
       <form onSubmit={handleSubmit} noValidate>
-        <UserTypeSelect handleClick={handleClickType} isChecked={isParentChecked} />
+        <UserTypeSelect isChecked={values.isTeacherChecked} handleChange={handleChange} />
         <InputWrapper error={errors.id}>
           <input
             autoComplete='off'
@@ -151,7 +135,7 @@ const SignUp = () => {
           <CardNumber id='cardNumber' {...cardNumber} />
         </InputWrapper>
 
-        <Term isChecked={isTermChecked} handleClick={handleClickTerm} />
+        <Term isChecked={values.term} handleChange={handleChange} />
 
         <ButtonSubmit type='submit'>
           <span>가입하기</span>

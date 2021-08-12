@@ -3,10 +3,15 @@ import { AiOutlineCheck } from 'react-icons/ai';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 
-const Term = ({ isChecked, handleClick }) => {
+const Term = ({ isChecked, handleChange }) => {
   return (
-    <TermWrapper isChecked={isChecked} onClick={handleClick}>
-      <input type='checkbox' id='term' />
+    <TermWrapper isChecked={isChecked}>
+      <input
+        type='checkbox'
+        id='term'
+        name='term'
+        onChange={(e) => handleChange({ target: { name: e.target.name, value: e.target.checked } })}
+      />
       <AiOutlineCheck />
       <a target='_blank' rel='noreferrer'>
         이용약관

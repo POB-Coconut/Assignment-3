@@ -61,5 +61,9 @@ export function signupValidate(values) {
     errors.age = '나이는 숫자로 입력해주세요.';
   }
 
+  if (!values.term) {
+    alert('이용약관에 동의해주십시오.');
+  }
+
   return errors;
 }
