@@ -7,22 +7,22 @@ const useForm = (callback, validate) => {
 
   useEffect(() => {
     if (Object.keys(errors).length === 0 && isSubmitting) {
-      if (callback(values)) {
-        setValues({});
-      }
+      callback(values);
+      setValues({});
+      setIsSubmitting(false);
     }
   }, [errors, callback, isSubmitting, values]);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault();
 
     setErrors(validate(values));
     setIsSubmitting(true);
   };
 
-  const handleChange = (event) => {
-    event.persist();
-    setValues((values) => ({ ...values, [event.target.name]: event.target.value }));
+  const handleChange = (e) => {
+    // e.persist();
+    setValues((values) => ({ ...values, [e.target.name]: e.target.value }));
   };
 
   return {

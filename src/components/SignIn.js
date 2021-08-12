@@ -1,46 +1,29 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useForm, useLocalStorage } from 'hooks';
-import { LOGIN_USER, STORAGE_KEYS, ROUTE_PATHS } from 'utils/config';
-import { setLocalStorage } from 'utils/storage';
+import { LOGIN_USER, ROUTE_PATHS } from 'utils/config';
 import { loginValidate } from 'utils/regex';
-import mockData from 'utils/usersData';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 import SignInForm from './SignInForm';
 
-// TODO useForm 수정해서 signin 시 login func 실행되며 rerender 되는거 막기
-
-const SignIn = () => {
+const SignIn = ({ userData }) => {
   const [isSignInFormOpen, setIsSignInFormOpen] = useState(false);
-  const [userList] = useLocalStorage(STORAGE_KEYS.users, mockData);
-  // const [_, setUser] = useLocalStorage(LOGIN_USER);
+  const [_, setUser] = useLocalStorage(LOGIN_USER);
   const history = useHistory();
 
   const login = () => {
-    const match = userList.find(
-      (user) => user.id === values.id && user.password === values.password,
-    );
+    const match = findUser(userData, values);
 
     if (!match) return alert('아이디와 비밀번호를 확인해주세요');
 
-    if (match.userType === 'admin') {
-      // setUser({ id: match.id, name: match.name, userType: match.userType });
-      setLocalStorage(LOGIN_USER, { id: match.id, name: match.name, userType: match.userType });
-      history.push(ROUTE_PATHS.ADMIN);
-    } else if (match.userType === 'teacher' || match.userType === 'parent') {
-      // setUser({ id: match.id, name: match.name, userType: match.userType });
-      setLocalStorage(LOGIN_USER, { id: match.id, name: match.name, userType: match.userType });
-      history.push(ROUTE_PATHS.USER);
-    }
+    (async () => {
+      await setUser({ id: match.id, name: match.name, userType: match.userType });
+      history.push(match.userType === 'admin' ? ROUTE_PATHS.ADMIN : ROUTE_PATHS.USER);
+    })();
   };
 
   const { values, errors, handleChange, handleSubmit } = useForm(login, loginValidate);
-
-  const handleSubmitLogin = (e) => {
-    e.preventDefault();
-    if (!isSignInFormOpen) return setIsSignInFormOpen(true);
-  };
 
   return (
     <Container isSignInFormOpen={isSignInFormOpen}>
@@ -51,11 +34,13 @@ const SignIn = () => {
           errors={errors}
           handleChange={handleChange}
         />
-        {!isSignInFormOpen ? (
-          <ButtonLogin type='button' onClick={handleSubmitLogin}>
+        {/* UI Error 문제 때문에 Ternary operator 사용 안함 */}
+        {!isSignInFormOpen && (
+          <ButtonLogin type='button' onClick={() => setIsSignInFormOpen(true)}>
             <span>LOG IN</span>
           </ButtonLogin>
-        ) : (
+        )}
+        {isSignInFormOpen && (
           <ButtonLogin type='submit'>
             <span>LOG IN</span>
           </ButtonLogin>
@@ -66,6 +51,9 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
+const findUser = (userData, values) =>
+  userData.find((user) => user.id === values.id && user.password === values.password);
 
 const Container = styled.section`
   flex-basis: 45%;

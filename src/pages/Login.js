@@ -1,14 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
+import { useLocalStorage } from 'hooks';
+import mockData from 'utils/usersData';
+import { STORAGE_KEYS } from 'utils/config';
 import { COLOR_STYLES, FONT_SIZE_STYLES } from 'styles/styles';
 import { SignIn, SignUp } from 'components';
 
 const Login = () => {
+  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USERS, mockData);
+
   return (
     <Container>
       <Logo>Jaranda</Logo>
-      <SignIn />
-      <SignUp />
+      <SignIn userData={userData} />
+      <SignUp userData={userData} setUserData={setUserData} />
     </Container>
   );
 };

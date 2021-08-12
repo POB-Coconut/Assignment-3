@@ -1,75 +1,31 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import { InputWrapper } from 'styles/InputWrapper';
-import { STORAGE_KEYS } from 'utils/config';
-import { filterObject } from 'utils/filterObject';
-import mockData from 'utils/usersData';
 import { signupValidate } from 'utils/regex';
-import { useForm, useInput, useLocalStorage } from 'hooks';
+import { filterObject } from 'utils/filterObject';
+import { useForm } from 'hooks';
 import CardNumber from 'components/CardNumber';
 import Address from 'components/Address';
 import Term from 'components/Term';
 import UserTypeSelect from 'components/UserTypeSelect';
 
-const SignUp = () => {
-  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.users, mockData);
-  const [isTermChecked, setIsTermChecked] = useState(false);
-  const [isParentChecked, setIsParentChecked] = useState(true);
-  const address = useInput('');
-  const cardNumber = useInput('');
-
+const SignUp = ({ userData, setUserData }) => {
   const signUp = (values) => {
-    if (!address.value || !cardNumber.value) {
-      address.checkIsError();
-      cardNumber.checkIsError();
-      return;
-    }
+    const newUserData = getNewUserData(values, userData);
 
-    if (!isTermChecked) return alert('이용약관에 동의 후 가입 가능합니다.');
-
-    const userType = isParentChecked ? 'parent' : 'teacher';
-    const newValues = filterObject(values, 'checkingPassword');
-    const newUser = {
-      ...newValues,
-      address: address.value,
-      cardNumber: cardNumber.value,
-      userType,
-    };
-    const updatedUserData = [...userData, newUser];
-
-    setUserData(updatedUserData);
-    setIsTermChecked(false);
-    address.clearValue();
-    cardNumber.clearValue();
+    setUserData(newUserData);
     alert('회원가입이 성공적으로 되었습니다. 더 진행하시려면 로그인을 해주십시오.');
-
-    return true;
   };
 
   const { values, errors, handleChange, handleSubmit } = useForm(signUp, signupValidate);
-
-  const handleClickTerm = (e) => {
-    if (e.target.id === 'term') return;
-
-    setIsTermChecked((isChecked) => !isChecked);
-  };
-
-  const handleClickType = (e) => {
-    if (e.target.closest('#parent')) {
-      setIsParentChecked(true);
-    }
-    if (e.target.closest('#teacher')) {
-      setIsParentChecked(false);
-    }
-  };
 
   return (
     <Container>
       <h3>자란다 회원가입</h3>
       <p>10초만에 가입하고 아이와 함께 할 선생님 정보를 받아보세요</p>
       <form onSubmit={handleSubmit} noValidate>
-        <UserTypeSelect handleClick={handleClickType} isChecked={isParentChecked} />
+        <UserTypeSelect isChecked={values.isTeacherChecked} handleChange={handleChange} />
         <InputWrapper error={errors.id}>
           <input
             autoComplete='off'
@@ -140,18 +96,21 @@ const SignUp = () => {
               value={values.age || ''}
               required
             />
-            {errors.age && <label htmlFor='name'>{errors.age}</label>}
+            {errors.age && <label htmlFor='age'>{errors.age}</label>}
           </InputWrapper>
         </InputDouble>
 
-        <InputWrapper error={address.isError}>
-          <Address id='address' {...address} />
-        </InputWrapper>
-        <InputWrapper error={cardNumber.isError}>
-          <CardNumber id='cardNumber' {...cardNumber} />
+        <InputWrapper error={errors.address}>
+          <Address id='address' address={values.address} handleChange={handleChange} />
+          {errors.address && <label htmlFor='address'>{errors.address}</label>}
         </InputWrapper>
 
-        <Term isChecked={isTermChecked} handleClick={handleClickTerm} />
+        <InputWrapper error={errors.cardNumber}>
+          <CardNumber id='cardNumber' cardNumber={values.cardNumber} handleChange={handleChange} />
+          {errors.cardNumber && <label htmlFor='cardNumber'>{errors.cardNumber}</label>}
+        </InputWrapper>
+
+        <Term isChecked={values.term} handleChange={handleChange} />
 
         <ButtonSubmit type='submit'>
           <span>가입하기</span>
@@ -162,6 +121,17 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const getNewUserData = (values, userData) => {
+  const userType = values.isTeacherChecked ? 'teacher' : 'parent';
+  const newValues = filterObject(values, 'checkingPassword');
+  const newUser = {
+    ...newValues,
+    userType,
+  };
+
+  return [...userData, newUser];
+};
 
 const Container = styled.section`
   flex-basis: 55%;

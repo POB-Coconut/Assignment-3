@@ -30,11 +30,13 @@ export function loginValidate(values) {
 
 export function signupValidate(values) {
   const errors = {};
+
   if (!values.id) {
     errors.id = '아이디를 입력하세요.';
   } else if (!regValidate(values.id, REGEXP.id)) {
     errors.id = '아이디는 4~12자의 영문 대소문자와 숫자로만 입력하여 주세요.';
   }
+
   if (!values.password) {
     errors.password = '비밀번호를 입력하세요';
   } else if (!regValidate(values.password, REGEXP.password)) {
@@ -59,6 +61,19 @@ export function signupValidate(values) {
     errors.age = '나이를 입력하세요.';
   } else if (!Number.isInteger(+values.age)) {
     errors.age = '나이는 숫자로 입력해주세요.';
+  }
+
+  if (!values.cardNumber) {
+    errors.cardNumber = '카드번호를 입력해주세요.';
+  }
+
+  if (!values.address) {
+    errors.address = '주소를 입력해주세요.';
+  }
+
+  if (!values.term) {
+    errors.term = '이용약관에 동의해주십시오.';
+    alert(errors.term);
   }
 
   return errors;

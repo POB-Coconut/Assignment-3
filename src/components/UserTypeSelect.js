@@ -3,16 +3,22 @@ import { AiOutlineCheck } from 'react-icons/ai';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 
-const Radios = ({ handleClick, isChecked }) => {
+const Radios = ({ isChecked, handleChange }) => {
   return (
     <RadioContainer>
-      <RadioBox id='parent' isChecked={isChecked} onClick={handleClick}>
-        <AiOutlineCheck />
-        <label htmlFor='parent'>부모님</label>
+      <input
+        type='checkbox'
+        id='check'
+        name='isTeacherChecked'
+        onChange={(e) => handleChange({ target: { name: e.target.name, value: e.target.checked } })}
+      />
+      <RadioBox htmlFor='check' isChecked={!isChecked}>
+        <AiOutlineCheck htmlFor='check' />
+        <span>부모님</span>
       </RadioBox>
-      <RadioBox id='teacher' isChecked={!isChecked} onClick={handleClick}>
+      <RadioBox htmlFor='check' isChecked={isChecked}>
         <AiOutlineCheck />
-        <label htmlFor='teacher'>선생님</label>
+        <span>선생님</span>
       </RadioBox>
     </RadioContainer>
   );
@@ -25,17 +31,17 @@ const RadioContainer = styled.div`
   justify-content: space-around;
   align-content: center;
   margin-bottom: ${SIZE_STYLES.large};
+
+  input[type='checkbox'] {
+    display: none;
+  }
 `;
 
-const RadioBox = styled.div`
+const RadioBox = styled.label`
   display: flex;
   align-items: center;
   font-size: ${FONT_SIZE_STYLES.small};
   cursor: pointer;
-
-  label {
-    cursor: pointer;
-  }
 
   svg {
     color: ${(props) => (props.isChecked ? COLOR_STYLES.primaryDarker : COLOR_STYLES.greyLighter)};
