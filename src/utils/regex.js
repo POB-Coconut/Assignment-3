@@ -30,6 +30,7 @@ export function loginValidate(values) {
 
 export function signupValidate(values) {
   const errors = {};
+
   if (!values.id) {
     errors.id = '아이디를 입력하세요.';
   } else if (!regValidate(values.id, REGEXP.id)) {
@@ -71,7 +72,8 @@ export function signupValidate(values) {
   }
 
   if (!values.term) {
-    alert('이용약관에 동의해주십시오.');
+    errors.term = '이용약관에 동의해주십시오.';
+    alert(errors.term);
   }
 
   return errors;

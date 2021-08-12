@@ -2,40 +2,23 @@ import React from 'react';
 import styled from 'styled-components';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import { InputWrapper } from 'styles/InputWrapper';
-import { STORAGE_KEYS } from 'utils/config';
-import { filterObject } from 'utils/filterObject';
-import mockData from 'utils/usersData';
 import { signupValidate } from 'utils/regex';
-import { useForm, useLocalStorage } from 'hooks';
+import { filterObject } from 'utils/filterObject';
+import { useForm } from 'hooks';
 import CardNumber from 'components/CardNumber';
 import Address from 'components/Address';
 import Term from 'components/Term';
 import UserTypeSelect from 'components/UserTypeSelect';
 
-const SignUp = () => {
-  const [userData, setUserData] = useLocalStorage(STORAGE_KEYS.USERS, mockData);
-
+const SignUp = ({ userData, setUserData }) => {
   const signUp = (values) => {
-    const newUserData = getNewUserData(values);
+    const newUserData = getNewUserData(values, userData);
 
     setUserData(newUserData);
     alert('회원가입이 성공적으로 되었습니다. 더 진행하시려면 로그인을 해주십시오.');
-
-    return true;
   };
 
   const { values, errors, handleChange, handleSubmit } = useForm(signUp, signupValidate);
-
-  const getNewUserData = (values) => {
-    const userType = values.isTeacherChecked ? 'teacher' : 'parent';
-    const newValues = filterObject(values, 'checkingPassword');
-    const newUser = {
-      ...newValues,
-      userType,
-    };
-
-    return [...userData, newUser];
-  };
 
   return (
     <Container>
@@ -138,6 +121,17 @@ const SignUp = () => {
 };
 
 export default SignUp;
+
+const getNewUserData = (values, userData) => {
+  const userType = values.isTeacherChecked ? 'teacher' : 'parent';
+  const newValues = filterObject(values, 'checkingPassword');
+  const newUser = {
+    ...newValues,
+    userType,
+  };
+
+  return [...userData, newUser];
+};
 
 const Container = styled.section`
   flex-basis: 55%;

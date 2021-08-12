@@ -40,7 +40,7 @@ function CardNumber({ cardNumber, handleChange }) {
       <input
         type='password'
         onClick={openModal}
-        value={cardNumber}
+        value={cardNumber || ''}
         placeholder='카드번호 16자리를 입력해주세요'
         readOnly
       />
