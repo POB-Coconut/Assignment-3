@@ -25,6 +25,11 @@ const SignIn = ({ userData }) => {
 
   const { values, errors, handleChange, handleSubmit } = useForm(login, loginValidate);
 
+  const openSignInForm = (e) => {
+    e.preventDefault();
+    setIsSignInFormOpen(true);
+  };
+
   return (
     <Container isSignInFormOpen={isSignInFormOpen}>
       <form onSubmit={handleSubmit} noValidate>
@@ -34,13 +39,11 @@ const SignIn = ({ userData }) => {
           errors={errors}
           handleChange={handleChange}
         />
-        {/* UI Error 문제 때문에 Ternary operator 사용 안함 */}
-        {!isSignInFormOpen && (
-          <ButtonLogin type='button' onClick={() => setIsSignInFormOpen(true)}>
+        {!isSignInFormOpen ? (
+          <ButtonLogin type='button' onClick={openSignInForm}>
             <span>LOG IN</span>
           </ButtonLogin>
-        )}
-        {isSignInFormOpen && (
+        ) : (
           <ButtonLogin type='submit'>
             <span>LOG IN</span>
           </ButtonLogin>
@@ -52,8 +55,9 @@ const SignIn = ({ userData }) => {
 
 export default SignIn;
 
-const findUser = (userData, values) =>
-  userData.find((user) => user.id === values.id && user.password === values.password);
+const findUser = (userData, values) => {
+  return userData.find((user) => user.id === values.id && user.password === values.password);
+};
 
 const Container = styled.section`
   flex-basis: 45%;
