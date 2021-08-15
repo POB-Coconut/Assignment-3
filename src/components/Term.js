@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const Term = ({ isChecked, handleChange }) => {
   return (
-    <TermWrapper isChecked={isChecked} htmlFor='term'>
+    <TermWrapper isChecked={isChecked}>
       <input
         type='checkbox'
         id='term'
