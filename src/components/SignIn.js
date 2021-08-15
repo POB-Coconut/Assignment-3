@@ -1,41 +1,33 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import useForm from 'hooks/useForm';
-import { LOGIN_USER, STORAGE_DATA } from 'utils/config';
+import { useForm, useLocalStorage } from 'hooks';
+import { LOGIN_USER, ROUTE_PATHS } from 'utils/config';
 import { loginValidate } from 'utils/regex';
-import { getLocalStorage, setLocalStorage } from 'utils/storage';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 import SignInForm from './SignInForm';
 
-const SignIn = () => {
+const SignIn = ({ userData }) => {
   const [isSignInFormOpen, setIsSignInFormOpen] = useState(false);
+  const [_, setUser] = useLocalStorage(LOGIN_USER);
   const history = useHistory();
-  function login() {
-    const userList = getLocalStorage(STORAGE_DATA.users);
-    const user = userList.find(
-      (user) => user.id === values.id && user.password === values.password,
-    );
 
-    if (user === undefined) {
-      alert('아이디와 비밀번호를 확인해주세요');
-      return null;
-    }
+  const login = () => {
+    const match = findUser(userData, values);
 
-    if (user.userType === 'admin') {
-      setLocalStorage(LOGIN_USER, { id: user.id, name: user.name, userType: user.userType });
-      history.push('/admin');
-    } else if (user.userType === 'teacher' || user.userType === 'parent') {
-      setLocalStorage(LOGIN_USER, { id: user.id, name: user.name, userType: user.userType });
-      history.push('/user');
-    }
-  }
+    if (!match) return alert('아이디와 비밀번호를 확인해주세요');
+
+    (async () => {
+      await setUser({ id: match.id, name: match.name, userType: match.userType });
+      history.push(match.userType === 'admin' ? ROUTE_PATHS.ADMIN : ROUTE_PATHS.USER);
+    })();
+  };
 
   const { values, errors, handleChange, handleSubmit } = useForm(login, loginValidate);
 
-  const handleSubmitLogin = (e) => {
+  const openSignInForm = (e) => {
     e.preventDefault();
-    if (!isSignInFormOpen) return setIsSignInFormOpen(true);
+    setIsSignInFormOpen(true);
   };
 
   return (
@@ -48,7 +40,7 @@ const SignIn = () => {
           handleChange={handleChange}
         />
         {!isSignInFormOpen ? (
-          <ButtonLogin type='button' onClick={handleSubmitLogin}>
+          <ButtonLogin type='button' onClick={openSignInForm}>
             <span>LOG IN</span>
           </ButtonLogin>
         ) : (
@@ -62,6 +54,10 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
+const findUser = (userData, values) => {
+  return userData.find((user) => user.id === values.id && user.password === values.password);
+};
 
 const Container = styled.section`
   flex-basis: 45%;

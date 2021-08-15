@@ -3,33 +3,35 @@ import { AiOutlineCheck } from 'react-icons/ai';
 import { COLOR_STYLES, FONT_SIZE_STYLES, SIZE_STYLES } from 'styles/styles';
 import styled from 'styled-components';
 
-const Term = ({ isChecked, handleClick }) => {
+const Term = ({ isChecked, handleChange }) => {
   return (
-    <TermWrapper isChecked={isChecked} onClick={handleClick}>
-      <input type='checkbox' id='term' />
+    <TermWrapper isChecked={isChecked}>
+      <input
+        type='checkbox'
+        id='term'
+        name='term'
+        onChange={(e) => handleChange({ target: { name: e.target.name, value: e.target.checked } })}
+      />
       <AiOutlineCheck />
       <a target='_blank' rel='noreferrer'>
         이용약관
       </a>
-      <label htmlFor='term'>을 모두 읽었으며 이에 동의합니다.</label>
+      <span>을 모두 읽었으며 이에 동의합니다.</span>
     </TermWrapper>
   );
 };
 
 export default Term;
 
-const TermWrapper = styled.div`
+const TermWrapper = styled.label`
   display: flex;
   align-items: center;
   margin-bottom: ${SIZE_STYLES.larger};
   font-size: ${FONT_SIZE_STYLES.small};
+  cursor: pointer;
 
   input[type='checkbox'] {
     display: none;
-  }
-
-  label {
-    cursor: pointer;
   }
 
   a {
@@ -40,6 +42,5 @@ const TermWrapper = styled.div`
     color: ${(props) => (props.isChecked ? COLOR_STYLES.primaryDarker : COLOR_STYLES.greyLighter)};
     font-size: ${FONT_SIZE_STYLES.large};
     margin-right: ${SIZE_STYLES.small};
-    cursor: pointer;
   }
 `;
