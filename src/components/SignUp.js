@@ -37,7 +37,7 @@ const SignUp = ({ userData, setUserData }) => {
             value={values.id || ''}
             required
           />
-          {errors.id && <label htmlFor='id'>{errors.id}</label>}
+          {errors.id && <small>{errors.id}</small>}
         </InputWrapper>
 
         <InputDouble>
@@ -52,7 +52,7 @@ const SignUp = ({ userData, setUserData }) => {
               value={values.password || ''}
               required
             />
-            {errors.password && <label htmlFor='password'>{errors.password}</label>}
+            {errors.password && <small>{errors.password}</small>}
           </InputWrapper>
           <InputWrapper double='true' error={errors.checkingPassword}>
             <input
@@ -65,9 +65,7 @@ const SignUp = ({ userData, setUserData }) => {
               value={values.checkingPassword || ''}
               required
             />
-            {errors.checkingPassword && (
-              <label htmlFor='checkingPassword'>{errors.checkingPassword}</label>
-            )}
+            {errors.checkingPassword && <small>{errors.checkingPassword}</small>}
           </InputWrapper>
         </InputDouble>
 
@@ -83,7 +81,7 @@ const SignUp = ({ userData, setUserData }) => {
               value={values.name || ''}
               required
             />
-            {errors.name && <label htmlFor='name'>{errors.name}</label>}
+            {errors.name && <small>{errors.name}</small>}
           </InputWrapper>
           <InputWrapper double='true' error={errors.age}>
             <input
@@ -96,18 +94,18 @@ const SignUp = ({ userData, setUserData }) => {
               value={values.age || ''}
               required
             />
-            {errors.age && <label htmlFor='age'>{errors.age}</label>}
+            {errors.age && <small>{errors.age}</small>}
           </InputWrapper>
         </InputDouble>
 
         <InputWrapper error={errors.address}>
           <Address id='address' address={values.address} handleChange={handleChange} />
-          {errors.address && <label htmlFor='address'>{errors.address}</label>}
+          {errors.address && <small>{errors.address}</small>}
         </InputWrapper>
 
         <InputWrapper error={errors.cardNumber}>
           <CardNumber id='cardNumber' cardNumber={values.cardNumber} handleChange={handleChange} />
-          {errors.cardNumber && <label htmlFor='cardNumber'>{errors.cardNumber}</label>}
+          {errors.cardNumber && <small>{errors.cardNumber}</small>}
         </InputWrapper>
 
         <Term isChecked={values.term} handleChange={handleChange} />

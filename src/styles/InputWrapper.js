@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { FONT_SIZE_STYLES, SIZE_STYLES, COLOR_STYLES } from './styles';
 
-export const InputWrapper = styled.div`
+export const InputWrapper = styled.label`
   display: inline-block;
   width: ${(props) => (props.double ? 'calc(50% - 3px)' : '100%')};
   text-align: start;
@@ -32,7 +32,7 @@ export const InputWrapper = styled.div`
     }
   }
 
-  label {
+  small {
     font-size: ${FONT_SIZE_STYLES.smaller};
     cursor: pointer;
     color: ${(props) => (props.errors === '.' ? COLOR_STYLES.white : COLOR_STYLES.red)};
