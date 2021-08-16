@@ -27,11 +27,7 @@ const SignInForm = ({ isSignInFormOpen, values, errors, handleChange }) => {
           value={values.id || ''}
           required
         />
-        {errors.id && (
-          <label htmlFor='id' className='help is-danger'>
-            {errors.id}
-          </label>
-        )}
+        {errors.id && (<small>{errors.id}</small>)}
       </InputWrapper>
       <InputWrapper error={errors.password}>
         <input
@@ -44,10 +40,7 @@ const SignInForm = ({ isSignInFormOpen, values, errors, handleChange }) => {
           value={values.password || ''}
           required
         />
-        {errors.password && (
-          <label htmlFor='password' className='help is-danger'>
-            {errors.password}
-          </label>
+        {errors.password && (<small>{errors.password}</small>
         )}
       </InputWrapper>
     </>
